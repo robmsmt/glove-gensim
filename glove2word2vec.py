@@ -42,8 +42,8 @@ def glove2word2vec(glove_vector_file, output_model_file):
         """
         Function to prepend lines using smart_open
         """
-        with smart_open.smart_open(infile, 'rb') as old:
-            with smart_open.smart_open(outfile, 'wb') as new:
+        with smart_open.smart_open(infile, 'r') as old:
+            with smart_open.smart_open(outfile, 'w') as new:
                 new.write(str(line.strip()) + "\n")
                 for line in old:
                     new.write(line)
@@ -59,7 +59,7 @@ def glove2word2vec(glove_vector_file, output_model_file):
     logger.info('Model %s successfully created !!'%output_model_file)
 
     # Demo: Loads the newly created glove_model.txt into gensim API.
-    model = gensim.models.Word2Vec.load_word2vec_format(model_file, binary=False) #GloVe Model
+    model = gensim.models.KeyedVectors.load_word2vec_format(model_file, binary=False) #GloVe Model
 
     logger.info('Most similar to king are: %s' % model.most_similar(positive=['king'], topn=10))
     logger.info('Similarity score between woman and man is %s ' % model.similarity('woman', 'man'))
