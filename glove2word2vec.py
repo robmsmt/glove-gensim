@@ -32,9 +32,9 @@ def glove2word2vec(glove_vector_file, output_model_file):
 
     def get_info(glove_file_name):
         """Return the number of vectors and dimensions in a file in GloVe format."""
-        with smart_open.smart_open(glove_file_name) as f:
+        with smart_open.smart_open(glove_file_name, encoding='utf-8') as f:
             num_lines = sum(1 for line in f)
-        with smart_open.smart_open(glove_file_name) as f:
+        with smart_open.smart_open(glove_file_name, encoding='utf-8') as f:
             num_dims = len(f.readline().split()) - 1
         return num_lines, num_dims
 
@@ -42,8 +42,8 @@ def glove2word2vec(glove_vector_file, output_model_file):
         """
         Function to prepend lines using smart_open
         """
-        with smart_open.smart_open(infile, 'r') as old:
-            with smart_open.smart_open(outfile, 'w') as new:
+        with smart_open.smart_open(infile, 'r', encoding='utf-8') as old:
+            with smart_open.smart_open(outfile, 'w', encoding='utf-8') as new:
                 new.write(str(line.strip()) + "\n")
                 for line in old:
                     new.write(line)
